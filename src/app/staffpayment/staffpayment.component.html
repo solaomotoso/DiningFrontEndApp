@@ -1,0 +1,141 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}<span>for Logged-in User: Staff ID: {{loggedInUser.custId}}</span>
+  </div>
+  <div class="card-body">
+    <form novalidate
+    (ngSubmit)="savePayment()"
+    [formGroup]="paymentForm">
+
+      
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="voucherId">Select Voucher</label>
+        <div class="col-md-8">
+          <select class="form-control" placeholder="Voucher required" formControlName="voucherId">
+            <option value="0">--Select--</option>
+            <option *ngFor="let vouch of vouchers"
+                    value={{vouch.id}}>
+                {{vouch.description}}
+            </option>
+        </select>
+        </div>
+      </div>
+       <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="unitId">Select Unit</label>
+        <div class="col-md-8">
+          <select class="form-control" placeholder="Unit required" formControlName="unit">
+            <option value="0">--Select--</option>
+            <option *ngFor="let unit of Units" value="{{unit}}" >{{unit}}</option>
+        </select>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="paymentmodeId">Select Payment Mode</label>
+        <div class="col-md-8">
+          <select class="form-control" placeholder="Payment Mode (required)" formControlName="paymentmodeid">
+            <option value="0">--Select--</option>
+            <option *ngFor="let pymtmode of paymentmodes"
+                    value={{pymtmode.id}}>
+                {{pymtmode.name}}
+            </option>
+        </select>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary mr-3"
+                  type="submit"
+                  style="width:auto" [disabled]="!paymentForm.valid">
+                  Add to cart
+          </button>
+          <button class="btn btn-outline-secondary mr-3"
+          style="width:80px;"
+          type="button"
+          title="Cancel your edits"
+          [routerLink]="['/payment']">
+    Cancel
+  </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-body">
+    <!-- Existing content of the staff component -->
+
+    <!-- Add the following line to display the cart component -->
+    <div class="table-responsive">
+      <table class="table mb-0"
+             *ngIf="paymentDetails && paymentDetails.length">
+        <thead>
+          <tr>
+            <th style="display: none">id</th>
+            <th>
+              <label class="checkbox">
+                <input type="checkbox" [(ngModel)]="selectAll" (change)="selectAllItems()" />
+                <span class="checkmark"></span>
+              </label>
+            </th>
+            <!--<th>Customer Type</th>-->
+            <!--<th>Customer Code</th>-->
+            <th>Date Entered</th>
+            <th>Quantity</th>
+            <th>Voucher</th>
+            <th>Amount</th>
+            <th>Total Amount</th> <!-- Added column for Total Amount -->
+            <th style="display: none">custtypeid</th>
+            <th style="display: none">voucherid</th>
+            <th style="display: none">paymentmodeid</th>
+            <th>Not needed?</th> <!-- Added column for Not needed? -->
+            <!-- <th>Password</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pymtdetails of paymentDetails">
+            <td style="display: none">{{ pymtdetails.id }}</td>
+            <td>
+              <label class="checkbox">
+                <input type="checkbox" [(ngModel)]="pymtdetails.selected" />
+                <span class="checkmark"></span>
+              </label>
+            </td>
+            <!--<td>{{ pymtdetails.customerName }}</td>-->
+            <!--<td>{{ pymtdetails.custCode }}</td>-->
+            <td>{{ pymtdetails.dateEntered | date :'medium' }}</td>
+            <td>{{ pymtdetails.voucherDescription }}</td>
+            <td>{{ pymtdetails.unit }}</td>
+            <td>{{ pymtdetails.amount }}</td>
+            <td>{{ pymtdetails.unit * pymtdetails.amount }}</td> <!-- Calculate and display the Total Amount -->
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="removeItem(pymtdetails)">Remove</button> <!-- Remove button -->
+            </td>
+            <td style="display: none">{{ pymtdetails.custtypeid }}</td>
+            <td style="display: none">{{ pymtdetails.voucherid }}</td>
+            <td style="display: none">{{ pymtdetails.paymentmodeid }}</td>
+            <!-- <td>{{ registration.password }}</td> -->
+            <td>
+            </td>
+            <td>
+             <!-- <button class="btn btn-outline-primary btn-sm"
+              (click)="updatepayment(pymtdetails)">
+                Served
+              </button>-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-right mt-3">
+      <button class="btn btn-primary mr-3"
+      (click)="checkout()" [disabled]="!isAnyCheckboxSelected()">Checkout</button> <!-- Added Checkout button -->
+    </div>
+  </div>
+</div>
+

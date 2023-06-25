@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="parent">
+   <div class="child">
+    <button id="btnStaff" class="btn btn-success mr-3"  [routerLink]="['/staffpayment']" style="width:250px">
+      Staff
+    </button>
+   </div>
+   <div class="child">
+    <button id="btnoutsorced" class="btn btn-primary mr-3" [routerLink]="['/outsourcedpayment']" style="width:250px">
+      Outsourced
+    </button>
+   </div>
+   <div class="child">
+    <button id="btnoutsorced" class="btn btn-secondary mr-3" [routerLink]="['/guestpayment']"  style="width:250px">
+      Guest
+    </button>
+   </div>
+  </div>
+</div>

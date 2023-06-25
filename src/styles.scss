@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+.bg-img {
+    background-image: url('/assets/images/dining.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logo-image {
+    width: 100px;
+    /* Adjust the width as needed */
+    height: auto;
+    /* Adjust the height as needed */
+    margin-bottom: 20px;
+    /* Add margin-bottom for spacing */
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+button {
+    margin-right: 10px;
+
+}
+
+.error {
+    color: red;
+}

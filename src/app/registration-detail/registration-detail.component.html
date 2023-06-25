@@ -1,0 +1,50 @@
+<div class="card">
+  <div class="card-header"
+       *ngIf="registration">
+    {{pageTitle + ": " + registration.firstName}}
+  </div>
+
+  <div class="card-body"
+       *ngIf="registration">
+
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-3">Name:</div>
+          <div class="col-md-6">{{registration.firstName}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Code:</div>
+          <div class="col-md-6">{{registration.lastName}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Description:</div>
+          <div class="col-md-6">{{registration.userName}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Availability:</div>
+          <div class="col-md-6">{{registration.password}}</div>
+        </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <button class="btn btn-outline-secondary mr-3"
+                style="width:80px"
+                (click)="onBack()">
+          <i class="fa fa-chevron-left"></i> Back
+        </button>
+        <button class="btn btn-outline-primary"
+                style="width:80px"
+                [routerLink]="['/registrations', registration.id, 'edit']">
+          Edit
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>

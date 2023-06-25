@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2">Filter by:</div>
+      <div class="col-md-4">
+        <input type="text"
+               [(ngModel)]="listFilter" />
+      </div>
+      <div class="col-md-4">
+      <button class="btn btn-primary mr-3"
+      [routerLink]="['/voucheredit']">
+        New Voucher
+      </button>
+      </div>
+    </div>
+    <div class="row"
+         *ngIf="listFilter">
+      <div class="col-md-6">
+        <h4>Filtered by: {{listFilter}}</h4>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table mb-0"
+             *ngIf="vouchers && vouchers.length">
+        <thead>
+          <tr>
+            <th style="display: none">id</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th style="display:none">Customer Typeid</th>
+            <th>Customer Type</th>
+            <!-- <th>Password</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let voucher of filteredVouchers">
+            <td style="display:none">{{ voucher.id }}</td>
+            <td>{{ voucher.description }}</td>
+            <td>{{ voucher.amount }}</td>
+            <td style="display:none">{{ voucher.custtypeid }}</td>
+            <td>{{ voucher.custname }}</td>
+            <!-- <td>{{ registration.password }}</td> -->
+            <td>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm">
+
+
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+

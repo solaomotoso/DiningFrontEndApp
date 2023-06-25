@@ -1,0 +1,119 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form novalidate
+          (ngSubmit)="saveUser()"
+          [formGroup]="registrationForm">
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="firstNameId">First Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="firstNameId"
+                 type="text"
+                 placeholder="Name (required)"
+                 formControlName="firstName"
+                 [ngClass]="{'is-invalid': displayMessage.firstName }" />
+          <span class="invalid-feedback">
+            {{displayMessage.firstName}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="lastNameId">Last Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="lastNameId"
+                 type="text"
+                 placeholder="Last Name (required)"
+                 formControlName="lastName"
+                 [ngClass]="{'is-invalid': displayMessage.lastName}" />
+          <span class="invalid-feedback">
+            {{displayMessage.lastName}}
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="userNameId">User Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="userNameId"
+                 type="text"
+                 placeholder="User Name (required)"
+                 formControlName="userName"
+                 [ngClass]="{'is-invalid': displayMessage.userName}" />
+          <span class="invalid-feedback">
+            {{displayMessage.userName}}
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="passwordId">Password</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="passwordId"
+                 type="password"
+                 placeholder="Password (required)"
+                 formControlName="password"
+                 [ngClass]="{'is-invalid': displayMessage.password}" />
+          <span class="invalid-feedback">
+            {{displayMessage.password}}
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="retypepasswordId">Re-type Password</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="retypepasswordId"
+                 type="password"
+                 placeholder="Password (required)"
+                 formControlName="password"
+                 [ngClass]="{'is-invalid': displayMessage.password}" />
+          <span class="invalid-feedback">
+            {{displayMessage.password}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary mr-3"
+                  style="width:80px;"
+                  type="submit"
+                  [title]="registrationForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!registrationForm.valid">
+            Save
+          </button>
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px;"
+                  type="button"
+                  title="Cancel your edits"
+                  [routerLink]="['/registrations']">
+            Cancel
+          </button>
+          <button class="btn btn-outline-warning"
+                  style="width:80px"
+                  type="button"
+                  title="Delete this user"
+                  (click)="deleteUser()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2">Filter by:</div>
+      <div class="col-md-4">
+        <input type="text"
+               [(ngModel)]="listFilter" />
+      </div>
+      <div class="col-md-4">
+      <button class="btn btn-primary mr-3"
+      [routerLink]="['/registration']">
+        New User
+      </button>
+      </div>
+    </div>
+    <div class="row"
+         *ngIf="listFilter">
+      <div class="col-md-6">
+        <h4>Filtered by: {{listFilter}}</h4>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table mb-0"
+             *ngIf="registrations && registrations.length">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>user Name</th>
+            <!-- <th>Password</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let registration of filteredRegistrations">
+            <td>{{ registration.firstName }}</td>
+            <td>{{ registration.lastName }}</td>
+            <td>{{ registration.userName }}</td>
+            <td>
+            </td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm"
+                      [routerLink]="['/registrations',registration.id]">
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-paginator class="mat-elevation-z8" #paginator [length]="200"
+[pageSize]="20"
+[pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+    </div>
+
+  </div>
+</div>
+

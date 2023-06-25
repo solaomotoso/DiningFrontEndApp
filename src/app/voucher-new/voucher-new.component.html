@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+  <div class="card-body">
+    <form novalidate
+    (ngSubmit)="save()"
+    [formGroup]="voucherForm">
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="customerTypeId">Select Customer Type</label>
+               <div class="col-md-8">
+                <select class="form-control" formControlName="custtypeid">
+                  <option value="0">--Select--</option>
+                  <option *ngFor="let custtype of customertypes"
+                          value={{custtype.id}}>
+                      {{custtype.name}}
+                  </option>
+              </select>
+              </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="lastNameId">Description</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="descriptionId"
+                 type="text"
+                 placeholder="Description (required)"
+                 formControlName="description" />
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="lastNameId">Amount</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="amountId"
+                 type="text"
+                 placeholder="Amount (required)"
+                 formControlName="amount" />
+        </div>
+      </div>
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary mr-3"
+                  type="submit"
+                  style="width:80px">
+                  Save
+          </button>
+          <button class="btn btn-outline-secondary mr-3"
+          style="width:80px;"
+          type="button"
+          title="Cancel your edits"
+          [routerLink]="['/voucher']">
+    Cancel
+  </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
