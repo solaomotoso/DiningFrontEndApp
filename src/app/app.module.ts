@@ -35,6 +35,8 @@ import { GuestpaymentComponent } from './guestpayment/guestpayment.component';
 import { AppMenuComponent } from './appmenu.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { OnlinepaymentComponent } from './onlinepayment/onlinepayment.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 //import { ReactiveFormEmailValidationComponent } from "./components/reactive-form-email-validation/reactive-form-email-validation.component";
 
 @NgModule({

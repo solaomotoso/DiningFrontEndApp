@@ -5,6 +5,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EnvironmentUrlService {
-  urlAddress: string = environment.urlAddress;
+  urlAddress: string = environment.apiUrl;
   constructor() { }
 }

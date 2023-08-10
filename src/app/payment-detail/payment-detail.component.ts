@@ -24,6 +24,9 @@ export class PaymentDetailComponent implements OnInit {
 
   filteredPaymentDetails: PaymentDetail[] = [];
   paymentDetails: PaymentDetail[] = [];
+  dataSource: any[] = [];
+  pageSize = 10;
+  totalItems = 0;
 
   constructor(private paymentdetailService: PaymentDetailService, private router: Router) { }
 
@@ -34,12 +37,25 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paymentdetailService.getPaymentDetails().subscribe(
-      (pymtdetails:PaymentDetail[])=>
-      {
+    this.loadData(10);
+    // this.paymentdetailService.getPaymentDetails().subscribe(
+    //   (pymtdetails:PaymentDetail[])=>
+    //   {
+    //     this.paymentDetails = pymtdetails;
+    //     this.filteredPaymentDetails = this.paymentDetails;
+    // });
+  }
+  loadData(page: number) {
+    this.paymentdetailService.getPaginatedData(page, this.pageSize).subscribe(
+      (pymtdetails:PaymentDetail[]) => {
         this.paymentDetails = pymtdetails;
-        this.filteredPaymentDetails = this.paymentDetails;
-    });
+        this.dataSource=pymtdetails; // Assuming your backend response has a property 'items' that holds the data array
+        this.totalItems = pymtdetails.length; // Assuming your backend response has a property 'totalItems' that holds the total number of items
+      },
+      // error => {
+      //   console.error('Error fetching data:', error);
+      // }
+    );
   }
 
   updatepayment(pymtdetail: PaymentDetail): void {

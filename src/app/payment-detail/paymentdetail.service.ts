@@ -18,7 +18,10 @@ export class PaymentDetailService {
   constructor(private http: HttpClient,  private envUrl: EnvironmentUrlService) { }
 
   getPaymentDetails(): Observable<PaymentDetail[]> {
-    return this.http.get<PaymentDetail[]>(this.PaymentDetailURL)
+    return this.http.get<PaymentDetail[]>(this.envUrl.urlAddress)
+  }
+  getPaginatedData(page: number, pageSize: number):Observable<PaymentDetail[]> {
+    return this.http.get<PaymentDetail[]>(`${this.envUrl.urlAddress}?page=${page}&pageSize=${pageSize}`);
   }
 
   getPaymentDetailsByUserId(userId: number): Observable<PaymentDetail[]> {

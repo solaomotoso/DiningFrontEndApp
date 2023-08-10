@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { delay, filter } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
 import { Registration } from './registration/registration.model';
+import {Route} from './shared/route.model';
+import { RegistrationService } from './registration/registration.service';
 
 @Component({
     selector: 'app-menu',
@@ -20,17 +22,27 @@ import { Registration } from './registration/registration.model';
    
     loggedinUser = ' ';
     registration: Registration | undefined;
+    route!: Route[];
   
   
-    constructor(private observer: BreakpointObserver, private router: Router, public authService: AuthService) { }
+    constructor(private observer: BreakpointObserver, private router: Router, public authService: AuthService,public regservice: RegistrationService) { }
   
       ngOnInit() {
+       
       this.isLoggedIn$ = this.authService.isLoggedIn;
       this.sidenav.mode='side';
       this.isLoggedIn$.subscribe((rslt: any) => {
       if(this.isLoggedIn$!==undefined)
       {
-      this.registration= this.authService.registration;//JSON.parse(localStorage.getItem('user')|| '[]');
+      this.registration= JSON.parse(localStorage.getItem('user')|| '[]');
+      if (this.registration){
+      this.regservice.getRoles(this.registration).subscribe(
+        (roless: Route[]) => {
+          this.route = roless;
+          // this.filteredPaymentDetails = this.paymentDetails;
+        });
+      }
+    
       if(this.registration!=undefined && this.registration.firstName!=undefined)
       {
         this.loggedinUser='Welcome: '+this.registration?.firstName+' '+this.registration?.lastName;

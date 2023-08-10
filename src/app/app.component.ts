@@ -10,6 +10,9 @@ import { logging } from 'protractor';
 import { Registration } from './registration/registration.model';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { environment } from 'src/environments/environment';
+import { RegistrationService } from './registration/registration.service';
+import { Route } from './shared/route.model';
 
 
 @UntilDestroy()
@@ -25,9 +28,14 @@ export class AppComponent implements OnInit {
  
   loggedinUser = ' ';
   registration: Registration | undefined;
+  routes: Route[]=[];
+  currentRoute: Route | undefined;
+  private loggedIn = new BehaviorSubject<boolean>(false);
 
 
-  constructor(private observer: BreakpointObserver, private router: Router, public authService: AuthService) { }
+  constructor(private observer: BreakpointObserver, private router: Router, public authService: AuthService, public regservice: RegistrationService) {
+    console.log(environment.production);
+   }
 
   onPaymentClick(): void {
     const custTypeId = this.authService.registration?.custTypeId;
@@ -38,6 +46,16 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/payment']);
     }
   }
+   
+  navigateurl(rte:Route): void {
+     
+      this.router.navigate(['/'+rte.path]);
+      localStorage.setItem('page',JSON.stringify(rte));
+    
+  }
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
 
 
     ngOnInit() {
@@ -46,6 +64,13 @@ export class AppComponent implements OnInit {
     if(this.isLoggedIn$!==undefined)
     {
     this.registration= this.authService.registration;//JSON.parse(localStorage.getItem('user')|| '[]');
+    if (this.registration){
+    this.regservice.getRoles(this.registration).subscribe(
+      (roless: Route[]) => {
+        this.routes = roless;
+        // this.filteredPaymentDetails = this.paymentDetails;
+      });
+    }
     if(this.registration!=undefined && this.registration.firstName!=undefined)
     {
      this.loggedinUser='Welcome: '+this.registration?.firstName+' '+this.registration?.lastName;
@@ -53,12 +78,37 @@ export class AppComponent implements OnInit {
     else{
       this.loggedinUser='';
     }
+    this.currentRoute= JSON.parse(localStorage.getItem('page')|| '[]');
+    if(this.currentRoute?.path!==undefined)
+    {
+      this.registration=JSON.parse(localStorage.getItem('user')|| '[]');
+      this.loggedIn.next(true);
+    }
+    if(this.currentRoute?.path!==undefined && this.registration?.firstName!=undefined)
+    {
+      this.router.navigate(['/'+this.currentRoute?.path]);
+      this.isLoggedIn$ = this.isLoggedIn;
+    this.isLoggedIn$.subscribe((rslt: any) => {
+    if(this.isLoggedIn$!==undefined)
+    {
+    this.registration= JSON.parse(localStorage.getItem('user')|| '[]');
+    if (this.registration){
+      this.regservice.getRoles(this.registration).subscribe(
+        (roless: Route[]) => {
+          this.routes = roless;
+          // this.filteredPaymentDetails = this.paymentDetails;
+        });
+      }
+    }
+    });
   }
-}
+    }
 
- );
+});
    
- 
+// get isLoggedIn() {
+//   return this.loggedIn.asObservable();
+// }
   
   
  }

@@ -39,6 +39,10 @@ const routes: Routes = [
     component: PaymentComponent,
   },
   {
+    path: 'StaffPayment',
+    component: StaffpaymentComponent,canActivate:[AuthGuard]
+  },
+  {
     path: 'voucher',
     component: VoucherComponent,
   },

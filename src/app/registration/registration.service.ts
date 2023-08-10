@@ -7,6 +7,7 @@ import { EnvironmentUrlService } from '../shared/services/environment-url.servic
 import { CustomerType } from '../payment/customertype.model';
 import { customerType } from '../shared/customertype.model';
 import { ServiceUrl } from '../shared/serviceurl.model';
+import { Route } from '../shared/route.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,17 @@ export class RegistrationService {
         catchError(this.handleError)
       );
   }
+
+  getRoles(registration: Registration): Observable<Route[]> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    registration.id = 0;
+    return this.http.post<Route[]>(this.envUrl.urlAddress+'/CustomerRoute/getroutes', registration, { headers })
+      .pipe(
+        tap(data => console.log('createUser: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
 
 
   deleteUser(reg: Registration): Observable<{}> {
